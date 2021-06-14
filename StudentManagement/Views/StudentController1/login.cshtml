@@ -1,0 +1,243 @@
+﻿@model StudentManagement.Core.Models.StaffLoginDetails
+@{
+    ViewData["Title"] = "Login";
+}
+<link href="~/css/Login.css" rel="stylesheet" />
+
+
+<div class="container">
+    <div class="contain">
+        <div class="main">
+            <p class="sign" align="center">Log in</p>
+            @using (Html.BeginForm("StaffLogin", "StudentController1", FormMethod.Post, new { @id = "formDetails", @autocomplete = "off" }))
+            {
+                <div class="form1">
+                    <div class="form-group">
+                        @Html.EditorFor(Modal => Modal.UserName, new
+                        {
+                            HtmlAttributes = new
+                            {
+                                @name = "UserName",
+                                @id = "user",
+                                @type = "text",
+                                @class = "un",
+                                @placeholder = "Username",
+                                @maxlength = "50",
+                                @align = "center",
+                                @*required = "true"*@
+}
+})
+                        @*@Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })*@
+                    </div>
+
+                    @*<input class="un " type="text" align="center" placeholder="Username">*@
+                    <div class="form-group">
+                        @Html.EditorFor(Modal => Modal.Password, new
+                        {
+                            HtmlAttributes = new
+                            {
+                                @name = "Password",
+                                @type = "password",
+                                @class = "pass",
+                                @placeholder = "Password",
+                                @maxlength = "50",
+                                @align = "center",
+                                @*@required = "true"*@
+}
+})
+                        @*@Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger " })*@
+                    </div>
+
+                    @*<input class="pass" type="password" align="center" placeholder="Password">*@
+                    <button class="submit" type="submit" align="center" onclick="SubmitDetails">Log in</button>
+                    @*<p class="forgot" align="center"><a href="#">Forgot Password?></a></p>*@
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+<script>
+    $(function () {
+        debugger;
+        $("#formDetails").validate({
+            rules:
+            {
+                UserName: {
+                    required: true,
+
+                },
+
+                Password: {
+                    required: true,
+                    minlength: 4,
+                    maxlength: 8
+                }
+
+
+            },
+            messages:
+            {
+                UserName: {
+                    required: "Name is required",
+
+                },
+                Password:
+                {
+                    required: "Password is required",
+                    minlength: "Password should have miminum of 4 characters",
+                    maxlength: "Password should have maximum of 8 charaacters"
+                }
+            }
+        });
+    });
+
+    function SubmitDetails() {
+        if ($("#formDetails").valid()) {
+            $("#formDetails").submit();
+        }
+    }
+
+
+</script>
+
+<!--comment
+@*<style>
+
+   /* * {
+        box-sizing: border-box;
+    }*/
+
+    containers {
+        margin: 0;
+
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+        font-family: "Lato", sans-serif;
+        font-weight: 700;
+
+         display: flex;
+        align-items: center;
+        justify-content: center;
+
+        color: #555;
+        background: #ecf0f3;
+    }
+
+    .log-div {
+        /* Login Card Width and height */
+        width: 350px;
+        height: 420px;
+        margin: 93px 100px 100px 376px;
+        /* padding */
+        padding: 20px 35px 15px 35px;
+        border-radius: 35px;
+        background: #ecf0f3;
+        /* Box-shadow for 3d visualization*/
+        box-shadow: -6px -6px 6px rgba(255, 255, 255, 0.8), 6px 6px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    /*.gfg-logo {
+        background: url("gfg-logo.png");
+        background-size: cover;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin: 0 auto;*/
+        /* Box-shadow for logo */
+        /*box-shadow: 0px 0px 2px #5f5f5f, 0px 0px 0px 5px #ecf0f3, 8px 8px 15px #a7aaaf, -8px -8px 15px #ffffff;
+    }*/
+
+    .log-title {
+        text-align: center;
+        font-size: 28px;
+        padding-top: 24px;
+        letter-spacing: 0.5px;
+        color: #6807f9;
+    }
+
+
+
+    .log-input-fields {
+        width: 100%;
+        padding: 20px 5px 10px 5px;
+    }
+
+        .log-input-fields input {
+            /* To hide default browser optios of input field */
+            border: none;
+            text-align: center;
+            outline: none;
+            /* Custom design for the input field */
+            background: none;
+            font-size: 18px;
+            color: #555;
+            padding: 15px 10px 15px 5px;
+        }
+
+    .log-user,
+    .log-password {
+        margin-bottom: 20px;
+        border-radius: 20px;
+        /* Box-shadow for 3d */
+        box-shadow: inset 5px 5px 5px #cbced1, inset -5px -5px 5px #ffffff;
+    }
+
+
+
+    .log-button {
+        /* To hide default browser optios of input field */
+        outline: none;
+        border: none;
+        /* Custom design for the Button */
+        cursor: pointer;
+        width: 100%;
+        height: 60px;
+        border-radius: 25px;
+        font-size: 20px;
+        font-weight: 700;
+        font-family: "Lato", sans-serif;
+        color: #fff;
+        text-align: center;
+        background: #67d18a;
+        box-shadow: 7px 7px 8px #cbced1, -7px -7px 8px #ffffff;
+        transition: 0.5s;
+    }
+
+        .log-button:hover {
+            background: #5fb87d;
+        }
+
+        .log-button:active {
+            background: #4a9764;
+        }
+
+
+</style>*@
+@*<div class="containers">
+    <div class="log-div">
+
+        <div class="log-title">Login</div>
+
+
+
+        <div class="log-input-fields">
+            <div class="log-user">
+                <input type="text" placeholder="Username" />
+            </div>
+
+            <div class="log-password">
+                <input type="password" placeholder="password" />
+            </div>
+        </div>
+
+        <button class="log-button"> Login  </button>
+
+    </div>
+</div>*@
+
+    -->

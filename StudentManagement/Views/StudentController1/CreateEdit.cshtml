@@ -1,0 +1,227 @@
+﻿@model StudentManagement.Core.Models.StudentDetails
+@{
+    ViewBag.Title = "CreateEdit";
+
+}
+<link href="~/css/CreateEdit.css" rel="stylesheet" />
+<script src="~/js/site.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}
+
+
+<div class="col-12 back">
+    <div class="containers col-lg-4 col-mg-4 col-mg-12">
+        <div class="log-div">
+            <div class="log-title">Register</div>
+
+            <div class="log-input-fields">
+
+
+                @using (Html.BeginForm("CreateEdit", "StudentController1", FormMethod.Post, new { @class = "agile_form", @id = "formDetails", autocomplete = "off" }))
+                {
+                    @Html.HiddenFor(model => model.StudentId)
+                    @*<form action="#" method="post" class="agile_form">*@
+                    <label>First Name</label>
+                    <div class="log-user">
+
+                        @Html.EditorFor(Modal => Modal.FirstName, new { HtmlAttributes = new { @type = "text", @class = "input", @maxlength = "50" } })
+                        @*<input placeholder=" " name="first name" type="text" required="">*@
+                    </div>
+                    <label>Last Name</label>
+                    <div class="log-user">
+
+                        @Html.EditorFor(Modal => Modal.LastName, new { HtmlAttributes = new { @type = "text", @class = "input", @maxlength = "50" } })
+                        @*<input placeholder=" " name="last name" type="text" required="">*@
+                    </div>
+
+                    <label>Date of Birth</label>
+                    <div class="log-user">
+
+                        @Html.EditorFor(Modal => Modal.DateOfBirth, "", new { HtmlAttributes = new { @type = "date", @class = "input", @Onchange = "calculateAge()", @id = "DateOfBirth" } })
+                        @*<input placeholder=" " name="Email" type="email" required="">*@
+                    </div>
+
+                    <label>Age</label>
+                    <div class="log-user">
+
+                        @Html.EditorFor(Modal => Modal.Age, new { HtmlAttributes = new { @type = "number", @class = " input", @placeholder = "Enter Your Age", @maxlength = "3", @id = "Age" } })
+                    </div>
+
+
+                    <label>FavoriteSubject</label>
+                    <div class="log-user">
+                        @Html.DropDownListFor(Modal => Modal.FavoriteSubject, new List<SelectListItem> { new SelectListItem() { Text="---Select Department---", Value=""},
+                                               new SelectListItem { Text="Tamil", Value="Tamil"},
+                                               new SelectListItem { Text="English", Value="English"},
+                                               new SelectListItem { Text="Maths", Value="Maths"},
+                                               new SelectListItem { Text="Science", Value="Science"},
+                                                new SelectListItem { Text="Social", Value="Social"},
+                                       }, new { @class = "input" })
+                    </div>
+
+
+                    <label>Intersted Course</label>
+                    <div class="log-user">
+
+                        @Html.DropDownListFor(Modal => Modal.InterstedCourse, new List<SelectListItem> { new SelectListItem() { Text="---Select Department---", Value=""},
+                                            new SelectListItem { Text="Maths Biology", Value="Tamil"},
+                                            new SelectListItem { Text="Computer Science", Value="Computer Science"},
+                                            new SelectListItem { Text="Art", Value="Art"},
+                                            new SelectListItem { Text="Pure Science", Value="Pure Science"},
+                                    }, new { @class = "input" })
+                    </div>
+                    <label>MathsMark</label>
+                    <div class="log-user">
+
+                        @Html.EditorFor(Modal => Modal.MathsMark, new { HtmlAttributes = new { @type = "number", @class = "input", placeholder = "Enter Your Maths Mark", @maxlength = "3" } })
+                    </div>
+
+                    <label>ChemistryMark</label>
+                    <div class="log-user">
+
+                        @Html.EditorFor(Modal => Modal.ChemistryMark, new { HtmlAttributes = new { @type = "number", @class = "input", placeholder = "Enter Your Chemistry Mark", @maxlength = "3" } })
+                    </div>
+
+                    <label>ComputerScienceMark</label>
+                    <div class="log-user">
+
+                        @Html.EditorFor(Modal => Modal.ComputerScienceMark, new { HtmlAttributes = new { @type = "number", @class = "input", placeholder = "Enter Your Computer Science Mark", @maxlength = "3" } })
+                    </div>
+
+                    @*<input type = "submit" value = "Submit" >*@
+                    <br />
+                    <div class="row" style="text-align:center">
+                        <div class="btn-algins">
+                            <button type="submit" class="btn btn-success" onclick="SubmitDetails()">Submit</button>
+                            <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                            <button type="button" class="btn btn-danger" onclick="btn()">Cancel</button>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        debugger;
+        var form = $('#formDetails').get(0);
+        $.removeData(form, 'validator');
+        validator = $('#formDetails').validate({
+            rules:
+            {
+                FirstName:
+                {
+                    maxlength: 50,
+                    regex: (/ ^[A - Za - z] +$/)
+                },
+
+                LastName:
+                {
+                    required: true,
+                    maxlength: 50,
+                    regex: (/ ^[A - Za - z] +$/)
+                },
+                Age:
+                {
+                    required: true,
+                    maxlength: 3,
+                    regex: "^[1-9]?[0-9]{1}$|^100$"
+
+                },
+                FavoriteSubject:
+                {
+                    required: true,
+                },
+                MathsMark:
+                {
+                    required: true,
+                    maxlength: 3,
+                    regex: "^[1-9]?[0-9]{1}$|^100$"
+                },
+                ChemistryMark:
+                {
+                    required: true,
+                    maxlength: 3,
+                    regex: "^[1-9]?[0-9]{1}$|^100$"
+                },
+                ComputerScienceMark:
+                {
+                    required: true,
+                    maxlength: 3,
+                    regex: "^[1-9]?[0-9]{1}$|^100$"
+                }
+            },
+            messages:
+            {
+
+                FirstName:
+                {
+                    maxlength: "Last Name should be 50 charcter",
+                    regex: "Enter valid Name"
+                },
+                LastName:
+                {
+                    required: "Last Name is required",
+                    maxlength: "Last Name should be 50 charcter",
+                    regex: "Enter valid Name"
+                },
+                age:
+                {
+                    required: "age is required",
+                    maxlength: "age should be 3 digits",
+                    regex: "enter valid mark"
+                },
+                FavoriteSubject:
+                {
+                    required: "Please Select Favorite Subject",
+                },
+                MathsMark:
+                {
+                    required: "Maths Mark is required",
+                    maxlength: "Maths Mark should be 3 digits",
+                    regex: "Enter Valid Mark"
+                },
+                ChemistryMark:
+                {
+                    required: "Chemistry Mark is required",
+                    maxlength: "Chemistry Mark should be 3 digits",
+                    regex: "Enter Valid Mark"
+                },
+                ComputerScienceMark:
+                {
+                    required: "Computer Science Mark is required",
+                    maxlength: "Computer Science Mark should be 3 digits",
+                    regex: "Enter Valid Mark"
+                }
+            }
+        });
+    });
+
+    function calculateAge() {
+        var dateString = $("#DateOfBirth").val();
+        //alert(dateString)
+        var today = new Date();
+        var birthDate = new Date(dateString);
+        var age = today.getFullYear() - birthDate.getFullYear();
+        var m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        $('#Age').val(age);
+
+    }
+
+
+    function SubmitDetails() {
+        debugger;
+        if ($("#formDetails").valid()) {
+            $("#formDetails").submit();
+        }
+    }
+</script>
